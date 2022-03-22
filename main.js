@@ -7,20 +7,22 @@ $(window).on("load", () => {
 
 function getMovies() {
     fetch(moviesURL).then(resp => resp.json()).then(data => {
-        const movies = document.getElementById('i');
-        console.log(data)
-        let html = "";
-        html += '<div class="d-flex" id ="contain">'
-        for (let i = 0; i < data.length; i++) {
-            let title = data[i].title;
-            let year = data[i].year;
-            let rating = data[i].rating;
-            let actors = data[i].actors;
-            let image = data[i].poster;
-            let director = data[i].director;
-            let plot = data[i].plot;
-            movies.innerHTML = html +=
-                `<div className="container-fluid">
+            const movies = document.getElementById('i');
+            console.log(data)
+            let html = "";
+            html += '<div class="d-flex" id ="contain">'
+            for (let i = 0; i < data.length; i++) {
+                let title = data[i].title;
+                let year = data[i].year;
+                let rating = data[i].rating;
+                let actors = data[i].actors;
+                let image = data[i].poster;
+                let director = data[i].director;
+                let plot = data[i].plot;
+                let id = data[i].id;
+                movies.innerHTML = html +=
+
+                    `<div className="container-fluid">
                     <section className="mx-auto my-5" style="max-width: 23rem;">
                         <div className="card">
                             <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
@@ -44,6 +46,10 @@ function getMovies() {
                                 </p>
                                 <hr className="my-4"/>
                                 <p className="lead"><strong>${year}</strong></p>
+                                <form>
+                                    <input class="title-edit" type="text" placeholder="Edit Movie">
+                                    <button data-id=${id} class='editBtn'>Output list characters</button>
+                                </form>
 
                             </div>
                         </div>
@@ -51,16 +57,62 @@ function getMovies() {
                     </section>
                 </div>`
 
+            }
+            return html
         }
-        return html
+    ).then(data => {
+        // let editBtns = document.getElementsByClassName('editBtn')
+        let value = title.value;
+        let titleEdit = document.getElementsByClassName('title-edit')
+        console.log(titleEdit.value);
+        let editBtns = $('.editBtn').on('click', function (e) {
+                e.preventDefault();
+                console.log(e.target.dataset.id);
+                console.log(value)
+                // let modification = {
+                //     title: titleEdit.value
+                // }
+                //
+                // const putOptions = {
+                //     method: 'PUT',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(modification)
+                // }
+                //
+                // fetch(moviesURL + '/' + e.target.dataset.id, putOptions).then(getMovies);
+
+            }
+        )
+
     })
+    //Foreach edit button node add an event listener
+    //the event listener should find the parent element of the button that was clicked and then console.log the value of the text input that is a child of the parent form
+    //refactor the event listener to send the api request
+
 
 }
 
-// function addMovie() {
+// function getId(id){
+//     let modification = {
+//     title: titleEdit.value
+// }
+//
+// const putOptions = {
+//     method:'PUT',
+//     headers: {
+//         'Content-Type' : 'application/json'
+//     },
+//     body: JSON.stringify(modification)
+// }
+//
+// fetch(moviesURL + '/' + id, putOptions).then(getMovies);
+//
+// }
+
 let btn = document.getElementById('title');
 let addItem = document.getElementById('characters');
-let div = document.getElementById('characters-list');
 btn.addEventListener('click', (e) => {
     e.preventDefault();
     let value = addItem.value;
@@ -78,21 +130,34 @@ btn.addEventListener('click', (e) => {
         body: JSON.stringify(movieToPost)
     }
     fetch(moviesURL, postOptions).then(getMovies)
-
 })
-// )}
 
-
-// addMovie()
+getMovies()
 
 
 // fetch(moviesURL, postOptions).then(getMovies)
 
-let deleteOptions = {
-    method: 'DELETE', headers: {
-        'content-type': 'application/json'
-    }
-}
+
+// let modification = {
+//     title:
+// }
+//
+// const putOptions = {
+//     method:'patch',
+//     headers: {
+//         'Content-Type' : 'application/json'
+//     }
+//     body: JSON.stringify(modification)
+// }
+//
+// fetch(moviesURL,id, putOptions).htne(getMovies);
+
+
+// let deleteOptions = {
+//     method: 'DELETE', headers: {
+//         'content-type': 'application/json'
+//     }
+// }
 
 
 // fetch(moviesURL +"/258", deleteOptions).then(getMovies);
@@ -104,8 +169,7 @@ let deleteOptions = {
 // fetch(moviesURL +"/16", deleteOptions).then(getMovies)
 // fetch(moviesURL +"/3", deleteOptions).then(getMovies)
 
-console.log(getMovies())
-getMovies()
+// console.log(getMovies())
 
 
 console.log(moviesURL);
