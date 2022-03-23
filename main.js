@@ -61,28 +61,27 @@ function getMovies() {
             return html
         }
     ).then(data => {
-        // let editBtns = document.getElementsByClassName('editBtn')
-        let value = title.value;
-        let titleEdit = document.getElementsByClassName('title-edit')
-        console.log(titleEdit.value);
-        let editBtns = $('.editBtn').on('click', function (e) {
-                e.preventDefault();
-                console.log(e.target.dataset.id);
-                console.log(value)
-                // let modification = {
-                //     title: titleEdit.value
-                // }
-                //
-                // const putOptions = {
-                //     method: 'PUT',
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify(modification)
-                // }
-                //
-                // fetch(moviesURL + '/' + e.target.dataset.id, putOptions).then(getMovies);
 
+        $('.editBtn').on('click', function (e) {
+                e.preventDefault();
+            console.log(e.target.previousElementSibling.value)
+                let editTheTitle = document.getElementsByClassName('title-edit');
+                console.log(editTheTitle[0].value)
+                for(let i = 0; i < editTheTitle.length; i++){
+                let value = e.target.previousElementSibling.value;
+                console.log(value)
+                let modification = {
+                    title: value
+                }
+                const putOptions = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(modification)
+                }
+                fetch(moviesURL + '/' + e.target.dataset.id, putOptions).then(getMovies);
+                }
             }
         )
 
@@ -111,26 +110,27 @@ function getMovies() {
 //
 // }
 
-let btn = document.getElementById('title');
-let addItem = document.getElementById('characters');
-btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    let value = addItem.value;
-    console.log(value)
-    const movieToPost = {
-        title: value,
-        rating: 5
-    }
-    console.log(movieToPost)
-    const postOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(movieToPost)
-    }
-    fetch(moviesURL, postOptions).then(getMovies)
-})
+// let btn = document.querySelectorAll('.title');
+// let addItem = document.querySelectorAll('.characters');
+// btn.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     let value = addItem.value;
+//     console.log(addItem[0].value)
+//     console.log(value)
+//     const movieToPost = {
+//         title: value,
+//         rating: 5
+//     }
+//     console.log(movieToPost)
+//     const postOptions = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(movieToPost)
+//     }
+//     fetch(moviesURL + '/' + id, postOptions).then(getMovies)
+// })
 
 getMovies()
 
