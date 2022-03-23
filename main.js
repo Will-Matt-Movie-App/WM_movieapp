@@ -61,17 +61,12 @@ function getMovies() {
             return html
         }
     ).then(data => {
-        // let editBtns = document.getElementsByClassName('editBtn')
-        // let value = title.value;
-        // console.log(value)
-        // let titleEdit = document.getElementsByClassName('title-edit')
-        // console.log(titleEdit);
+
         $('.editBtn').on('click', function (e) {
                 e.preventDefault();
             console.log(e.target.previousElementSibling.value)
                 let editTheTitle = document.getElementsByClassName('title-edit');
                 console.log(editTheTitle[0].value)
-                let html = ""
                 for(let i = 0; i < editTheTitle.length; i++){
                 let value = e.target.previousElementSibling.value;
                 console.log(value)
