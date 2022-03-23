@@ -8,7 +8,7 @@ $(window).on("load", () => {
 function getMovies() {
     fetch(moviesURL).then(resp => resp.json()).then(data => {
             const movies = document.getElementById('i');
-            console.log(data)
+            // console.log(data)
             let html = "";
             html += '<div class="d-flex" id ="contain">'
             for (let i = 0; i < data.length; i++) {
@@ -50,7 +50,7 @@ function getMovies() {
                                     <input class="title-edit" type="text" placeholder="Edit Movie">
                                     <button data-id=${id} class='editBtn'>Output list characters</button>
                                 </form>
-
+                                <button class="deleteBtn bg-danger" data-id =${id}>Delete Button</button>
                             </div>
                         </div>
 
@@ -64,100 +64,62 @@ function getMovies() {
 
         $('.editBtn').on('click', function (e) {
                 e.preventDefault();
-            console.log(e.target.previousElementSibling.value)
+                console.log(e.target.previousElementSibling.value)
                 let editTheTitle = document.getElementsByClassName('title-edit');
-                console.log(editTheTitle[0].value)
-                for(let i = 0; i < editTheTitle.length; i++){
-                let value = e.target.previousElementSibling.value;
-                console.log(value)
-                let modification = {
-                    title: value
+                // console.log(editTheTitle[0].value)
+                for (let i = 0; i < editTheTitle.length; i++) {
+                    let value = e.target.previousElementSibling.value;
+                    console.log(value)
+                    let modification = {
+                        title: value
+                    }
+                    const putOptions = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(modification)
+                    }
+                    fetch(moviesURL + '/' + e.target.dataset.id, putOptions).then(getMovies);
                 }
-                const putOptions = {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(modification)
+            }
+        )
+
+    }).then(data => {
+        $('.deleteBtn').on('click', function (e) {
+                e.preventDefault();
+                let erase = document.getElementsByClassName('deleteBtn');
+                // console.log(erase);
+                // console.log(e.target.parentElement)
+                // let eraseTheTitle = e.target.parentElement;
+                // console.log(eraseTheTitle);
+                for(let i = 0; i < erase.length; i++){
+                    let eraseTheTitle = e.target.parentElement;
+                    console.log(e.target.dataset.id);
+                    console.log(eraseTheTitle)
+                let deleteOptions = {
+                    method: 'DELETE', headers: {
+                        'content-type': 'application/json'
+                    }
                 }
-                fetch(moviesURL + '/' + e.target.dataset.id, putOptions).then(getMovies);
+                fetch(moviesURL + "/" + e.target.dataset.id, deleteOptions).then(getMovies);
                 }
             }
         )
 
     })
-    //Foreach edit button node add an event listener
-    //the event listener should find the parent element of the button that was clicked and then console.log the value of the text input that is a child of the parent form
-    //refactor the event listener to send the api request
-
-
 }
 
-// function getId(id){
-//     let modification = {
-//     title: titleEdit.value
-// }
-//
-// const putOptions = {
-//     method:'PUT',
-//     headers: {
-//         'Content-Type' : 'application/json'
-//     },
-//     body: JSON.stringify(modification)
-// }
-//
-// fetch(moviesURL + '/' + id, putOptions).then(getMovies);
-//
-// }
 
-// let btn = document.querySelectorAll('.title');
-// let addItem = document.querySelectorAll('.characters');
-// btn.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     let value = addItem.value;
-//     console.log(addItem[0].value)
-//     console.log(value)
-//     const movieToPost = {
-//         title: value,
-//         rating: 5
-//     }
-//     console.log(movieToPost)
-//     const postOptions = {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(movieToPost)
-//     }
-//     fetch(moviesURL + '/' + id, postOptions).then(getMovies)
-// })
-
-getMovies()
-
-
-// fetch(moviesURL, postOptions).then(getMovies)
-
-
-// let modification = {
-//     title:
-// }
-//
-// const putOptions = {
-//     method:'patch',
-//     headers: {
-//         'Content-Type' : 'application/json'
-//     }
-//     body: JSON.stringify(modification)
-// }
-//
-// fetch(moviesURL,id, putOptions).htne(getMovies);
-
+getMovies();
 
 // let deleteOptions = {
 //     method: 'DELETE', headers: {
 //         'content-type': 'application/json'
 //     }
 // }
+
+// fetch(booksURL + "/" + e.target.dataset.id, deleteOptions).then(getBooks);
 
 
 // fetch(moviesURL +"/258", deleteOptions).then(getMovies);
