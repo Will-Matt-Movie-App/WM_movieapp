@@ -10,7 +10,7 @@ function getMovies() {
             const movies = document.getElementById('i');
             // console.log(data)
             let html = "";
-            html += '<div class="d-flex" id ="contain">'
+            html += '<div class="d-flex justify-content-center mt-5" id ="contain">'
             for (let i = 0; i < data.length; i++) {
                 let title = data[i].title;
                 let year = data[i].year;
@@ -24,7 +24,7 @@ function getMovies() {
 
                     `<div className="container-fluid">
                     <section className="mx-auto my-5" style="max-width: 23rem;">
-                        <div className="card">
+                        <div className="card" class="mx-5">
                             <div className="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                 <img src=${image}
                                      className="img-fluid"/>
@@ -46,7 +46,7 @@ function getMovies() {
                                 </p>
                                 <hr className="my-4"/>
                                 <p className="lead"><strong>${year}</strong></p>
-                                <form>
+                                <form class="">
                                     <input class="title-edit" type="text" placeholder="Edit movies">
                                     <input class="rating-edit" type="text" placeholder="Edit rating">
                                     <button data-id=${id} class='editBtn'>Output list characters</button>
